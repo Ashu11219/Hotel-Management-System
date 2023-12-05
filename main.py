@@ -13,7 +13,11 @@ while True:
         choice_lodging = input()
 
         if choice_lodging == '1':
-            loging_customer()
+            try:
+                lodging_customer()
+            except Exception as e:
+                print(e)
+                continue
         elif choice_lodging == '2':
             lodging_staff()
         else:
