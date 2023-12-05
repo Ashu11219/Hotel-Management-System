@@ -41,10 +41,10 @@ def update_total_expense(phone_number, total_price, action):
         writer = csv.writer(file)
         writer.writerows(updated_record)
 
-def set_order_status(phone_number, status):
+def set_order_status(phone_number, status, chosen_dish, quantity):
     connection = connect_to_mysql()
     cursor = connection.cursor(dictionary=True)
-    result = cursor.execute("UPDATE menu SET status = %s WHERE phone_number = %s", (status, phone_number))
+    result = cursor.execute("INSERT INTO guest_orders (phone_number, status, chosen_dish, quantity) VALUES (%s, %s, %s, %s)", (phone_number, status, chosen_dish, quantity))
     connection.close()
 
     if result:
@@ -55,11 +55,14 @@ def set_order_status(phone_number, status):
 def get_orders_by_phone(phone_number):
     connection = connect_to_mysql()
     cursor = connection.cursor(dictionary=True)
-    result = cursor.execute("SELECT dish, status FROM menu WHERE phone_no = %s", (phone_number,))
-    connection.close()
+    query = """SELECT guest.phone_number, guest.chosen_dish, guest.quantity, guest.status, m.price
+            FROM guest_orders guest
+            JOIN menu m ON guest.chosen_dish = m.dish
+            WHERE guest.phone_number = %s"""
+    orders = cursor.execute(query, (phone_number,))
 
-    if result:
-        return result.fetchall()
+    if orders:
+        return orders.fetchall()
     else:
         return None
 
@@ -89,7 +92,7 @@ if choice == '1':
     if price:
         total_price = price * quantity
         update_total_expense(phone_number, total_price, 'add')
-        set_order_status(phone_number, "processing")
+        set_order_status(phone_number, chosen_dish, quantity, "processing")
         print("Order placed successfully!")
     else:
         print("Invalid dish. Please choose a valid dish.")

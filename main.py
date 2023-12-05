@@ -44,7 +44,11 @@ while True:
                 print(e)
                 continue
         elif choice_restaurant == '2':
-            restaurant_staff()
+            try:
+                restaurant_staff()
+            except Exception as e:
+                print(e)
+                continue
         else:
             continue
 
