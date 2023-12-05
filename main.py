@@ -8,7 +8,7 @@ while True:
 
     if choice == 1:
         print('\nWelcome to the Lodging services\n')
-        print('Press 1 to confirm you are our customer')
+        print('Press 1 to confirm you are our guest')
         print('Press 2 to confirm you are our staff member')
         print('Press any other number to exit to the main menu')
 
@@ -16,30 +16,37 @@ while True:
 
         if choice_lodging == '1':
             try:
-                lodging_customer()
+                lodging_guest()
             except Exception as e:
                 print(e)
                 continue
         elif choice_lodging == '2':
-            lodging_staff()
+            try:
+                lodging_staff()
+            except Exception as e:
+                print(e)
+                continue
         else:
             continue
 
     elif choice == 2:
         print('\nWelcome to the Restaurant services\n')
-        print('Press 1 to confirm you are our customer')
+        print('Press 1 to confirm you are our guest')
         print('Press 2 to confirm you are our staff member')
         print('Press any other number to exit to the main menu')
 
         choice_restaurant = input()
 
         if choice_restaurant == '1':
-            restaurant_customer()
+            try:
+                restaurant_guest()
+            except Exception as e:
+                print(e)
+                continue
         elif choice_restaurant == '2':
             restaurant_staff()
         else:
             continue
-
 
     else:
         print('Invalid choice')
