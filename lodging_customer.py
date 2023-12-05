@@ -27,10 +27,11 @@ def update_occupancy_status(room_number, occupied=True):
     connection.close()
 
 #main program:-
-print('Welcome to our hotel')
+print('\nWelcome to our hotel\n')
 print('Choose an action:- ')
 print('1. Book a room')
 print('Any other key to exit to main menu')
+
 choice = input()
 
 if choice == '1':
