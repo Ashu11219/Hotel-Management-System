@@ -1,3 +1,8 @@
+from lodging_guest import *
+from lodging_staff import *
+from restaurant_guest import *
+from restaurant_staff import *
+
 while True:
     print('Welcome to the Hotel Management System\n')
     print('We offer the following services:-')

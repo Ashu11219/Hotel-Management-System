@@ -55,37 +55,38 @@ def checkout_guest(guest_name):
     update_occupancy_status(int(checked_out_guest[1]), occupied=False)
 
 #main program:-
-print('\nWelcome to our hotel\n')
-print('Choose an action:- ')
-print('1. Book a room')
-print('2. Checkout')
-print('Any other key to exit to main menu')
+def lodging_guest():
+    print('\nWelcome to our hotel\n')
+    print('Choose an action:- ')
+    print('1. Book a room')
+    print('2. Checkout')
+    print('Any other key to exit to main menu')
 
-choice = input()
+    choice = input()
 
-if choice == '1':
-    guest_name = input("Enter your name: ")
-    guest_number = int(input('Enter your phone number: '))
-    room_number = get_empty_room_number() # Attempt to get an empty room number using the function
+    if choice == '1':
+        guest_name = input("Enter your name: ")
+        guest_number = int(input('Enter your phone number: '))
+        room_number = get_empty_room_number() # Attempt to get an empty room number using the function
 
-    # Check if a room is available
-    if room_number is not None:
-        total_expense = 0.0
-        update_occupancy_status(room_number)
+        # Check if a room is available
+        if room_number is not None:
+            total_expense = 0.0
+            update_occupancy_status(room_number)
 
-        # Prepare data
-        guest_data = [guest_name, guest_number, room_number, total_expense]
+            # Prepare data
+            guest_data = [guest_name, guest_number, room_number, total_expense]
 
-        # Append data to the CSV file
-        with open("guest_details.csv", mode="a", newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(guest_data)
+            # Append data to the CSV file
+            with open("guest_details.csv", mode="a", newline="") as file:
+                writer = csv.writer(file)
+                writer.writerow(guest_data)
 
-        print("Check-in successful, enjoy your stay in room", room_number)
+            print("Check-in successful, enjoy your stay in room", room_number)
+        else:
+            print("Sorry, the hotel is fully occupied, no rooms available.")
+    elif choice == '2':
+        guest_name = input("Enter your name to checkout: ")
+        checkout_guest(guest_name)
     else:
-        print("Sorry, the hotel is fully occupied, no rooms available.")
-elif choice == '2':
-    guest_name = input("Enter your name to checkout: ")
-    checkout_guest(guest_name)
-else:
-    raise Exception('Going back to the main menu.')
+        raise Exception('Going back to the main menu.')

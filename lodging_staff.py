@@ -29,17 +29,18 @@ def occupancy_status():
 
 
 #main program:-
-print('\nWelcome to the Lodging Staff Menu\n')
-print('Choose an action:- ')
-print('1. View Guest Details')
-print('2. View Occupancy Status')
-print("Press any other key to go back to the main menu")
+def lodging_staff():
+    print('\nWelcome to the Lodging Staff Menu\n')
+    print('Choose an action:- ')
+    print('1. View Guest Details')
+    print('2. View Occupancy Status')
+    print("Press any other key to go back to the main menu")
 
-choice = input()
+    choice = input()
 
-if choice == '1':
-    details()
-elif choice == '2':
-    occupancy_status()
-else:
-    raise Exception('Going back to the main menu.')
+    if choice == '1':
+        details()
+    elif choice == '2':
+        occupancy_status()
+    else:
+        raise Exception('Going back to the main menu.')

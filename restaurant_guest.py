@@ -74,53 +74,54 @@ def insert_feedback(phone_number, feedback):
     connection.close()
 
 #main program:-
-print('\nWelcome to the restaurant\n')
-print('Choose an action:- ')
-print('1. Place an order')
-print('2. View your orders')
-print('3. Cancel order')
-print('4. Submit your valuable feedback')
-print('Any other key to exit to main menu')
+def restaurant_guest():
+    print('\nWelcome to the restaurant\n')
+    print('Choose an action:- ')
+    print('1. Place an order')
+    print('2. View your orders')
+    print('3. Cancel order')
+    print('4. Submit your valuable feedback')
+    print('Any other key to exit to main menu')
 
-choice = input()
+    choice = input()
 
-if choice == '1':
-    phone_number = int(input("Enter your phone number: "))
-    chosen_dish = input("Enter the dish you want to order: "),
-    quantity = int(input("Enter the quantity: "))
-    price = get_price(chosen_dish)
-    if price:
-        total_price = price * quantity
-        update_total_expense(phone_number, total_price, 'add')
-        set_order_status(phone_number, chosen_dish, quantity, "processing")
-        print("Order placed successfully!")
+    if choice == '1':
+        phone_number = int(input("Enter your phone number: "))
+        chosen_dish = input("Enter the dish you want to order: "),
+        quantity = int(input("Enter the quantity: "))
+        price = get_price(chosen_dish)
+        if price:
+            total_price = price * quantity
+            update_total_expense(phone_number, total_price, 'add')
+            set_order_status(phone_number, chosen_dish, quantity, "processing")
+            print("Order placed successfully!")
+        else:
+            print("Invalid dish. Please choose a valid dish.")
+    elif choice == '2':
+        phone_number = input("Enter your phone number: ")
+        orders = get_orders_by_phone(phone_number)
+
+        if orders:
+            print('Your orders: ',orders)
+        else:
+            print('No orders of given phone number found')
+    elif choice == '3':
+        phone_number = int(input("Enter your phone number: "))
+        chosen_dish = input("Enter the dish you want to cancel: ")
+        quantity = int(input("Enter the quantity to cancel: "))
+        price = get_price(chosen_dish)
+
+        if price:
+            total_price = price * quantity
+            update_total_expense(phone_number, total_price, 'remove')
+            set_order_status(phone_number,"cancelled")
+            print("Order cancelled successfully!")
+        else:
+            print("No orders with the entered phone number found.")
+    elif choice == '4':
+        phone_number = input("Enter your phone number: "),
+        feedback = input("Enter your valuable feedback: ")
+        insert_feedback(phone_number, feedback)
+        print("Feedback submitted successfully!")
     else:
-        print("Invalid dish. Please choose a valid dish.")
-elif choice == '2':
-    phone_number = input("Enter your phone number: ")
-    orders = get_orders_by_phone(phone_number)
-
-    if orders:
-        print('Your orders: ',orders)
-    else:
-        print('No orders of given phone number found')
-elif choice == '3':
-    phone_number = int(input("Enter your phone number: "))
-    chosen_dish = input("Enter the dish you want to cancel: ")
-    quantity = int(input("Enter the quantity to cancel: "))
-    price = get_price(chosen_dish)
-
-    if price:
-        total_price = price * quantity
-        update_total_expense(phone_number, total_price, 'remove')
-        set_order_status(phone_number,"cancelled")
-        print("Order cancelled successfully!")
-    else:
-        print("No orders with the entered phone number found.")
-elif choice == '4':
-    phone_number = input("Enter your phone number: "),
-    feedback = input("Enter your valuable feedback: ")
-    insert_feedback(phone_number, feedback)
-    print("Feedback submitted successfully!")
-else:
-    raise Exception('Going back to the main menu.')
+        raise Exception('Going back to the main menu.')
